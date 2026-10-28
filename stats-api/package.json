@@ -1,0 +1,26 @@
+{
+  "name": "stats-api",
+  "version": "1.0.0",
+  "description": "API de estadísticas sobre las matrices Q y R",
+  "main": "dist/server.js",
+  "scripts": {
+    "typecheck": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "node --test",
+    "start": "node dist/server.js"
+  },
+  "packageManager": "pnpm@11.10.0",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.5",
+    "@types/supertest": "^7.2.1",
+    "supertest": "^7.3.1",
+    "typescript": "^7.0.2"
+  }
+}
