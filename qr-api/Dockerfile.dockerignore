@@ -1,0 +1,10 @@
+# El contexto de build es la raíz del repo (para poder copiar frontend/).
+# Nada de secretos ni de lo que no necesita esta imagen.
+.git
+.env
+.env.*
+stats-api
+docs
+**/node_modules
+**/*_test.go
+qr-api/bin

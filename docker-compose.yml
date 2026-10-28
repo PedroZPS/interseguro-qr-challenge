@@ -1,0 +1,27 @@
+services:
+  stats-api:
+    build: ./stats-api
+    # Sin "ports": solo es accesible desde la red interna de compose.
+    environment:
+      # Solo la clave PÚBLICA: Node valida tokens pero no puede emitirlos.
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY:?define JWT_PUBLIC_KEY en .env}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  qr-api:
+    build:
+      context: .
+      dockerfile: qr-api/Dockerfile
+    ports:
+      - "${QR_API_PORT:-8080}:8080"
+    environment:
+      STATS_API_URL: http://stats-api:3000
+      DEMO_USER: ${DEMO_USER:?define DEMO_USER en .env}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?define DEMO_PASSWORD en .env}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY:?define JWT_PRIVATE_KEY en .env}
+    depends_on:
+      stats-api:
+        condition: service_healthy
