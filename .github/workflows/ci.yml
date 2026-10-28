@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  qr-api:
+    name: qr-api (Go)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: qr-api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: qr-api/go.mod
+          cache-dependency-path: qr-api/go.sum
+      - run: go vet ./...
+      - run: go test ./...
+
+  stats-api:
+    name: stats-api (Node)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: stats-api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: stats-api/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: stats-api/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  docker:
+    name: Imágenes Docker
+    runs-on: ubuntu-latest
+    needs: [qr-api, stats-api]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir qr-api (contexto en la raíz para incluir frontend/)
+        run: docker build -f qr-api/Dockerfile -t qr-api:ci .
+      - name: Construir stats-api
+        run: docker build -t stats-api:ci stats-api
