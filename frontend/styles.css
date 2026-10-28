@@ -1,0 +1,114 @@
+:root {
+  color-scheme: light;
+  --paper: #f6f8fb;
+  --grid: #e4ebf4;
+  --ink: #16233a;
+  --muted: #5b6b82;
+  --zero: #a9b6c8;
+  --rule: #c5d1e0;
+  --cobalt: #2448d8;
+  --cobalt-dark: #1b3bb0;
+  --error: #b42318;
+  --error-bg: #fdecea;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  /* Papel milimetrado muy tenue: el tema es álgebra, no decoración. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--ink);
+  font: 1rem/1.55 var(--sans);
+}
+
+main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
+
+h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.01em; }
+h1 { font-size: 2.4rem; line-height: 1.15; margin: 0 0 0.75rem; }
+h2 { font-size: 1.4rem; margin: 0 0 0.75rem; }
+header p { color: var(--muted); max-width: 60ch; margin: 0 0 2rem; }
+var { font-family: var(--serif); font-style: italic; }
+
+section { border-top: 1px solid var(--rule); padding-top: 1.5rem; margin-top: 1.5rem; }
+
+label { display: block; font-weight: 600; margin: 1rem 0 0.35rem; }
+form > label:first-child { margin-top: 0; }
+.hint { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.5rem; }
+
+input, textarea {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+textarea {
+  max-width: 100%;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: pre;
+  overflow-x: auto;
+}
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1rem; }
+button { font: inherit; cursor: pointer; border-radius: 4px; padding: 0.65rem 1.1rem; }
+button:disabled { opacity: 0.6; cursor: progress; }
+.primary { background: var(--cobalt); color: #fff; border: 1px solid var(--cobalt); font-weight: 600; }
+.primary:hover:not(:disabled) { background: var(--cobalt-dark); }
+.secondary { background: #fff; color: var(--ink); border: 1px solid var(--rule); }
+.link { background: none; border: 0; color: var(--muted); text-decoration: underline; padding-left: 0.25rem; margin-left: auto; }
+
+/* Los mensajes solo ocupan espacio cuando hay algo que decir. */
+[role="alert"]:empty { display: none; }
+[role="alert"] {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.8rem;
+  color: var(--error);
+  background: var(--error-bg);
+  border-left: 3px solid var(--error);
+}
+[role="alert"].info { color: var(--ink); background: #e8eefc; border-left-color: var(--cobalt); }
+
+/* Ecuación A = Q · R */
+.equation { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; margin: 1.25rem 0 1rem; }
+.term { display: flex; align-items: center; gap: 1rem; max-width: 100%; }
+.op { font: 700 2.4rem/1 var(--serif); color: var(--muted); }
+figure { margin: 0; max-width: 100%; }
+figcaption { font-size: 0.85rem; color: var(--muted); text-align: center; margin-top: 0.35rem; }
+
+/* Corchetes altos como en un libro de álgebra. Los dibuja .matrix; el scroll vive dentro. */
+.matrix { position: relative; display: inline-block; max-width: 100%; padding: 0.35rem 0.9rem; background: var(--paper); }
+.matrix::before, .matrix::after { content: ""; position: absolute; top: 0; bottom: 0; width: 0.55rem; border: 2px solid var(--ink); }
+.matrix::before { left: 0; border-right: 0; }
+.matrix::after { right: 0; border-left: 0; }
+.scroll { overflow-x: auto; }
+
+table { border-collapse: collapse; font: 1.15rem var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+td { padding: 0.15rem 0.6rem; text-align: right; white-space: nowrap; }
+td.below { color: var(--zero); } /* ceros por debajo de la diagonal de R */
+
+.check { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; }
+
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.4rem 1.75rem; margin: 0.5rem 0 0; }
+dt { color: var(--muted); }
+dd { margin: 0; font: 1.1rem var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 36rem) {
+  h1 { font-size: 1.9rem; }
+  main { padding-top: 1.5rem; }
+  .link { margin-left: 0; }
+}

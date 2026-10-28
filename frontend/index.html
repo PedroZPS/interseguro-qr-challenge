@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factorización QR</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Factorización QR</h1>
+      <p>Descompone una matriz <var>A</var> en <var>Q</var>, de columnas ortonormales, y <var>R</var>, triangular superior. Después calcula estadísticas sobre las dos.</p>
+    </header>
+
+    <section id="login-view" hidden>
+      <h2>Iniciar sesión</h2>
+      <form id="login-form">
+        <label for="username">Usuario</label>
+        <input id="username" name="username" autocomplete="username" autocapitalize="none" required>
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <p id="login-message" role="alert"></p>
+        <div class="actions">
+          <button class="primary" type="submit">Iniciar sesión</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="app-view" hidden>
+      <form id="qr-form">
+        <label for="matrix">Matriz A</label>
+        <p id="matrix-help" class="hint">Una fila por línea. Separa los valores con espacios o comas. Máximo 100 × 100.</p>
+        <textarea id="matrix" rows="5" spellcheck="false" aria-describedby="matrix-help">3 0
+4 5</textarea>
+        <p id="qr-message" role="alert"></p>
+        <div class="actions">
+          <button class="primary" type="submit">Calcular QR</button>
+          <button class="secondary" id="example" type="button">Cargar ejemplo</button>
+          <button class="link" id="logout" type="button">Cerrar sesión</button>
+        </div>
+      </form>
+
+      <section id="result" aria-live="polite" hidden></section>
+    </section>
+  </main>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
